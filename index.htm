@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="app" class="container">
+        <h1>Team List</h1>
+        <warning>{{message}}</warning>
+        <!-- form with eventCode and Submit to call vue updateSortedList funciton -->
+        
+        <div class="mb-3">
+            <span class="mr-5 pr-5" >Event Code</span>
+            <input style="margin-left: 8px; margin-right: 8px; " type="text" class="ml-5 pl-5 mr-5 pr-5"  id="eventCode" v-model="eventCode" >
+            <button type="button" class="btn btn-primary btn-sm" @click="updateSortedTeamList">Submit</button>
+        </div>
+
+        <!-- a table with sortTeamList -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" >Team</th>
+                    <th scope="col" >Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="team in sortedTeamList">
+                    <td>{{team[0]}}</td>
+                    <td>{{team[1]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </body>
+</html>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
+<script src="js/vueapp.js" type="module"></script>   

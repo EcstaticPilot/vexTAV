@@ -15,25 +15,37 @@
         <warning>{{message}}</warning>
         <!-- form with eventCode and Submit to call vue updateSortedList funciton -->
 
-        <div class="mb-3">
-            <span class="mr-5 pr-5">Event Code</span>
-            <input style="margin-left: 8px; margin-right: 8px; " type="text" class="ml-5 pl-5 mr-5 pr-5" id="eventCode"
-                v-model="eventCode">
-            <button type="button" class="btn btn-primary btn-sm" @click="updateSortedTeamList">Submit</button>
-        </div>
-
+        <form @submit.prevent="updateAll">
+            <div class="mb-3">
+              <span class="mr-5 pr-5">Event Code</span>
+              <input style="margin-left: 8px; margin-right: 8px;" type="text" class="ml-5 pl-5 mr-5 pr-5" id="eventCode" v-model="eventCode">
+              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            </div>
+          </form>
+          <div>
+            <input type="checkbox" id="checkbox" v-model="reverse" @change="reverseTeamList">
+            <label for="checkbox1" style="margin-right: 20px;">reverse</label>
+            <input type="checkbox" id="checkbox2" v-model="showSelected" @change="updateSortedTeamList">
+            <label for="checkbox2">showSelected?</label>
+          </div>
         <!-- a table with sortTeamList -->
         <table class="table">
+          
             <thead>
                 <tr>
                     <th scope="col">Team</th>
-                    <th scope="col">Time left until next match</th>
+                    <th scope="col">Matches left until next match</th>
+                    <th scope="col">selected</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="team in sortedTeamList">
-                    <td>{{team[0]}}</td>
-                    <td>{{team[1]}}</td>
+                <tr v-for="team in displayTeamList">
+                    <td>{{team.number}}</td>
+                    
+                    <td>{{team.time}}</td>
+                    <td>
+                      <input type="checkbox" v-model="team.selected" @change = "addTeam(team)">
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -46,11 +58,27 @@
             </style>
             <p class="subtle">Created and maintained by Nikhil from team 3050X.</p>
 
-            
+            <form @submit.prevent="addTeamButton">
+                <div>
+                  <label for="teamInput">Add Team:</label>
+                  <input id="teamInput" type="text" v-model="teamInput">
+                  <button type="submit">Add</button>
+                </div>
+              </form>
+            </aside>
+            <div>
+                <h3>Added Teams:</h3>
+                <ul>
+                  <li v-for="(team, index) in selectedTeamList" :key="index">
+                    {{ team }} <button type="button" @click="removeTeam(index)">Remove</button>
+                  </li>
+                </ul>
+              </div>
+            </aside>
         </aside>
     </div>
 </body>
 
 </html>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="js/vueapp.js?v=1.2" type="module"></script>
+<script src="js/vueapp.js?v=2" type="module"></script>
